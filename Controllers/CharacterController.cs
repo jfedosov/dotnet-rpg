@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace dotnet_rpg.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase
@@ -21,11 +24,11 @@ namespace dotnet_rpg.Controllers
 
         }
 
-
         [HttpGet("GetAll")]
         public async Task<ActionResult<ServiceResponse<List<AddCharacterDto>>>> Get()
         {
-            return Ok(await _characterService.GetAllCharacters());
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            return Ok(await _characterService.GetAllCharacters(id));
         }
 
         [HttpGet("{id}")]
