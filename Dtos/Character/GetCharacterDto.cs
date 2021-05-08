@@ -19,5 +19,6 @@ namespace dotnet_rpg.Dtos.Character
         public int Fights { get; set; }
         public int Victories { get; set; }
         public int Defeats { get; set; }
+        public int MyProperty { get; set; }
     }
 }
